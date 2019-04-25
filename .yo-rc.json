@@ -1,0 +1,29 @@
+{
+  "generator-ngx-rocket": {
+    "version": "6.0.1",
+    "props": {
+      "location": "path",
+      "appName": "Simple Task Manager SPA",
+      "target": [
+        "web"
+      ],
+      "pwa": true,
+      "ui": "material",
+      "layout": "side-menu",
+      "auth": false,
+      "lazy": true,
+      "angulartics": false,
+      "tools": [
+        "prettier",
+        "hads"
+      ],
+      "utility": [
+        "moment"
+      ],
+      "projectName": "simple-task-manager-spa",
+      "packageManager": "npm",
+      "mobile": [],
+      "desktop": []
+    }
+  }
+}
