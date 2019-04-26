@@ -1,0 +1,17 @@
+<div fxLayout="row" style="padding: 1rem">
+  <mat-card fxFlex="100%" class="p-0">
+    <mat-card-content>
+      <mat-card-subtitle>
+        <div cdkDropList [cdkDropListData]="tasks" (cdkDropListDropped)="drop($event)">
+          <div class="pop" *ngFor="let task of tasks" cdkDrag>{{ task }}</div>
+        </div>
+      </mat-card-subtitle>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="fab-row">
+  <button mat-fab (click)="this.novo()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

@@ -1,20 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TaskManagerComponent } from './task-manager.component';
+import { TaskManagerModalComponent } from './task-manager-modal.component';
 
 describe('TaskManagerComponent', () => {
-  let component: TaskManagerComponent;
-  let fixture: ComponentFixture<TaskManagerComponent>;
+  let component: TaskManagerModalComponent;
+  let fixture: ComponentFixture<TaskManagerModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaskManagerComponent ]
-    })
-    .compileComponents();
+      declarations: [TaskManagerModalComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaskManagerComponent);
+    fixture = TestBed.createComponent(TaskManagerModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

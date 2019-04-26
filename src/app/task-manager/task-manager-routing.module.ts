@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { extract } from '@app/core';
-import { TaskManagerComponent } from './component/task-manager.component';
+import { TaskManagerListComponent } from './task-manager-list/task-manager-list.component';
 
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
-  { path: '', component: TaskManagerComponent, data: { title: extract('Task') } }
+  { path: '', component: TaskManagerListComponent, data: { title: extract('Task') } }
 ];
 
 @NgModule({
