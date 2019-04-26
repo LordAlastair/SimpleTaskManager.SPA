@@ -7,30 +7,24 @@
       [disableClose]="!isMobile"
       ngClass.gt-sm="has-border"
     >
-      <mat-toolbar color="primary">
+      <mat-toolbar color="primary" >
         <span translate>APP_NAME</span>
         <div fxFlex></div>
         <div></div>
-        <div>
-          <button mat-icon-button [matMenuTriggerFor]="languageMenu">
-            <mat-icon>language</mat-icon>
-          </button>
-          <mat-menu #languageMenu="matMenu">
-            <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
-              {{ language }}
-            </button>
-          </mat-menu>
-        </div>
       </mat-toolbar>
-      <nav>
+      <nav >
         <mat-list>
           <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/home" routerLinkActive="active" (click)="isMobile && sidenav.close()">
+          <a mat-list-item routerLink="/home" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>Home</span>
           </a>
           <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/about" routerLinkActive="active" (click)="isMobile && sidenav.close()">
+          <a mat-list-item routerLink="/about" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>About</span>
+          </a>
+          <mat-divider></mat-divider>
+          <a mat-list-item routerLink="/task" routerLinkActive="active" (click)="sidenav.close()">
+            <span translate>Tasks</span>
           </a>
           <mat-divider></mat-divider>
         </mat-list>
