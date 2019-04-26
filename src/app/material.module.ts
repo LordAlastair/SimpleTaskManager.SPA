@@ -7,6 +7,8 @@
  */
 
 import { NgModule } from '@angular/core';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -89,7 +91,8 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule
+    MatTreeModule,
+    DragDropModule
   ]
 })
 export class MaterialModule {}
