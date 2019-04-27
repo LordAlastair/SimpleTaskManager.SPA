@@ -11,14 +11,14 @@
                 </mat-card-title>
                 <mat-card-subtitle >
                   <span fxLayout="row" [ngStyle]="{'color': task.price >= 1000 ? 'green' : 'none'}" >Valor: R$ {{task.price}} reais</span>
-                  <span fxLayout="row" [ngStyle]="{'color': this.now >= task.deadline ? 'red' : 'none'}">Prazo: {{ task.deadline }}</span>
+                  <span fxLayout="row" [ngStyle]="{'color': this.now >= task.deadline.getDate ? 'red' : 'none'}">Prazo: {{ task.deadline }}</span>
                 </mat-card-subtitle>
               </mat-card-content>
               <mat-card-actions>
-                  <button class="mat-raised-button mat-warn" (click)="this.delete()">
+                  <button class="mat-raised-button mat-warn" (click)="this.delete(task)">
                       <span>Excluir</span>
                     </button>
-                    <button class="mat-raised-button mat-primary" (click)="this.edit()">
+                    <button class="mat-raised-button mat-primary" (click)="this.edit(task)">
                       <span>Editar</span>
                     </button>
               </mat-card-actions>
@@ -31,7 +31,7 @@
 </div>
 
 <div class="fab-row">
-  <button mat-fab (click)="this.novo()">
+  <button mat-fab (click)="this.create()">
     <mat-icon>add</mat-icon>
   </button>
 </div>

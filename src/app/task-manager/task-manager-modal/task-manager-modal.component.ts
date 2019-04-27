@@ -35,6 +35,10 @@ export class TaskManagerModalComponent implements OnInit {
     }
   }
 
+  close(){
+    this.ref.close(true);
+  }
+
   feedForm(data: any) {
     if (!data) {
       return;
@@ -46,7 +50,7 @@ export class TaskManagerModalComponent implements OnInit {
     this.task.get('deadline').setValue(data.deadline);
   }
 
-  async salvar() {
+  async persist() {
     if (this.operation === 'edit') {
       this.service.update(this.task.value).then(response => {
         this.ref.close(true);
