@@ -3,7 +3,27 @@
     <mat-card-content>
       <mat-card-subtitle>
         <div cdkDropList [cdkDropListData]="tasks" (cdkDropListDropped)="drop($event)">
-          <div class="pop" *ngFor="let task of tasks" cdkDrag>{{ task }}</div>
+          <div *ngFor="let task of tasks" cdkDrag>
+            <mat-card class="task-card" >
+              <mat-card-content >
+                <mat-card-title>
+                  {{ task.name }} 
+                </mat-card-title>
+                <mat-card-subtitle >
+                  <span fxLayout="row" [ngStyle]="{'color': task.price >= 1000 ? 'green' : 'none'}" >Valor: R$ {{task.price}} reais</span>
+                  <span fxLayout="row" [ngStyle]="{'color': this.now >= task.deadline ? 'red' : 'none'}">Prazo: {{ task.deadline }}</span>
+                </mat-card-subtitle>
+              </mat-card-content>
+              <mat-card-actions>
+                  <button class="mat-raised-button mat-warn" (click)="this.delete()">
+                      <span>Excluir</span>
+                    </button>
+                    <button class="mat-raised-button mat-primary" (click)="this.edit()">
+                      <span>Editar</span>
+                    </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
         </div>
       </mat-card-subtitle>
     </mat-card-content>

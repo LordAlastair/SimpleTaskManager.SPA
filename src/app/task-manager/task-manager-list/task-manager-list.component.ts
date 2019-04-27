@@ -10,32 +10,31 @@ import { TaskManagerModalComponent } from '../task-manager-modal/task-manager-mo
   templateUrl: './task-manager-list.component.html',
   styleUrls: ['./task-manager-list.component.scss']
 })
+
 export class TaskManagerListComponent implements OnInit {
   version: string = environment.version;
+  tasks: any[];
+  now = Date.now();
 
-  tasks = [
-    'Artist I - Davido',
-    'Artist II - Wizkid',
-    'Artist III - Burna Boy',
-    'Artist IV - Kiss Daniel',
-    'Artist V - Mayorkun',
-    'Artist VI - Mr. Eazi',
-    'Artist VII - Tiwa Savage',
-    'Artist VIII - Blaqbonez',
-    'Artist IX - Banky W',
-    'Artist X - Yemi Alade',
-    'Artist XI - Perruzi',
-    'Artist XII - Seyi Shay',
-    'Artist XIII - Teni'
-  ];
+  constructor(private service: TaskManagerService, private dialog: MatDialog) { }
 
-  constructor(private service: TaskManagerService, private dialog: MatDialog) {}
-
-  ngOnInit() {}
+  async ngOnInit() {
+    const response = await this.service.recoverAll();
+    this.feedTasks(response)
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
   }
+
+  feedTasks(data: any[]) {
+    if (!data) {
+      return;
+    }
+
+    this.tasks = data;
+  }
+
 
   novo() {
     const ref = this.dialog.open(TaskManagerModalComponent, {
