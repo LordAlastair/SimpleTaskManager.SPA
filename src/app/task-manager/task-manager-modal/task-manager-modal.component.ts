@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { environment } from '@env/environment';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TaskManagerService } from '../task-manager.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Task } from '../task-manager.model';
 
 @Component({
   selector: 'app-task-manager',
@@ -14,28 +15,27 @@ export class TaskManagerModalComponent implements OnInit {
   task: FormGroup;
   operation: string;
   constructor(private service: TaskManagerService, private dialog: MatDialog,
-    private ref: MatDialogRef<TaskManagerModalComponent>,
+    private ref: MatDialogRef<TaskManagerModalComponent>, private cdRef: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) private data: TaskManagerModalData,
     private formBuilder: FormBuilder) {
     this.task = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required]],
       price: [0],
-      deadline: [null]
+      deadline: [0],
+      presentation_order: [0],
+      done: [false]
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.operation = this.data.operation;
     if (this.operation !== 'create') {
-      this.service.recoverById(this.data.id)
-        .subscribe(response => {
-          this.feedForm(response);
-        });
+      this.feedForm(this.data.task);
     }
   }
 
-  close(){
+  close() {
     this.ref.close(true);
   }
 
@@ -48,26 +48,20 @@ export class TaskManagerModalComponent implements OnInit {
     this.task.get('name').setValue(data.name);
     this.task.get('price').setValue(data.price);
     this.task.get('deadline').setValue(data.deadline);
+    this.task.get('done').setValue(data.done);
+    this.task.get('presentation_order').setValue(data.presentation_order);
   }
 
   async persist() {
-    if (this.operation === 'edit') {
-      this.service.update(this.task.value).then(response => {
-        this.ref.close(true);
-      });
-    }
-    else {
-      this.service.create(this.task.value).then(response => {
-        this.ref.close(true);
-      });
-    }
+    this.service.store(this.task.value).then(response => {
+      this.ref.close(true);
+    });
   }
 }
 
-
 export class TaskManagerModalData {
   operation: Operation;
-  id: string;
+  task: Task;
 }
 
 export type Operation = 'edit' | 'create';

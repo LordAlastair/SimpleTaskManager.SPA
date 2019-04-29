@@ -21,11 +21,20 @@ export class TaskManagerListComponent implements OnInit {
 
   async ngOnInit() {
     const response = await this.service.recoverAll();
-    this.feedTasks(response)
+    this.feedTasks(response.data)
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    let taskA = this.tasks[event.previousIndex];
+    let taskB = this.tasks[event.currentIndex];
+    let aux = taskA.presentation_order;
+
+    taskA.presentation_order = taskB.presentation_order;
+    taskB.presentation_order = aux;
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+
+    this.service.store(taskA);
+    this.service.store(taskB);
   }
 
   feedTasks(data: any[]) {
@@ -55,7 +64,8 @@ export class TaskManagerListComponent implements OnInit {
       width: '800px',
       data: {
         id: task.id,
-        operation: 'edit'
+        operation: 'edit',
+        task: task
       }
     });
 
@@ -67,7 +77,7 @@ export class TaskManagerListComponent implements OnInit {
       this.service
         .recoverAll()
         .then(response => {
-          this.feedTasks(response);
+          this.feedTasks(response.data);
         });
     });
   }
@@ -88,7 +98,7 @@ export class TaskManagerListComponent implements OnInit {
       this.service
         .recoverAll()
         .then(response => {
-          this.feedTasks(response);
+          this.feedTasks(response.data);
         });
     });
   }
