@@ -4,6 +4,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material';
 import { TaskManagerService } from '../task-manager.service';
 import { TaskManagerModalComponent, TaskManagerModalData } from '../task-manager-modal/task-manager-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-task-manager',
@@ -17,6 +18,7 @@ export class TaskManagerListComponent implements OnInit {
   now = Date.now();
 
   constructor(private service: TaskManagerService, private dialog: MatDialog,
+    private toastr: ToastrService
   ) { }
 
   async ngOnInit() {
@@ -47,14 +49,18 @@ export class TaskManagerListComponent implements OnInit {
 
   async delete(task: any) {
     if (confirm("Realmente deseja deletar a tarefa " + name + "?")) {
+      this.toastr.info('Aguardando resposta do servidor', 'Gerenciador de tarefas');
       const response = await this.service
         .delete(task.id);
 
       if (response.success) {
+        this.toastr.info('Tarefa removida com sucesso', 'Gerenciador de tarefas');
         const data = this.tasks;
         const index = data.indexOf(task);
         data.splice(index, 1);
         this.feedTasks(data);
+      }else{
+        this.toastr.error(response.message, 'Gerenciador de tarefas');
       }
     }
   }

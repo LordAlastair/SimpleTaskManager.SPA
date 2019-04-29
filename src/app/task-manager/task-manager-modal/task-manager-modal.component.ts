@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TaskManagerService } from '../task-manager.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Task } from '../task-manager.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-task-manager',
@@ -16,13 +17,13 @@ export class TaskManagerModalComponent implements OnInit {
   operation: string;
   constructor(private service: TaskManagerService, private dialog: MatDialog,
     private ref: MatDialogRef<TaskManagerModalComponent>, private cdRef: ChangeDetectorRef,
-    @Inject(MAT_DIALOG_DATA) private data: TaskManagerModalData,
+    @Inject(MAT_DIALOG_DATA) private data: TaskManagerModalData, private toastr: ToastrService,
     private formBuilder: FormBuilder) {
     this.task = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required]],
       price: [0],
-      deadline: [0],
+      deadline: [0, [Validators.required]],
       presentation_order: [0],
       done: [false]
     });
@@ -53,8 +54,14 @@ export class TaskManagerModalComponent implements OnInit {
   }
 
   async persist() {
+    this.toastr.info('Salvando dados no servidor', 'Gerenciador de tarefas');
     this.service.store(this.task.value).then(response => {
+      this.toastr.success('Tarefa salva com sucesso, atualizando a lista...', 'Gerenciador de tarefas');
       this.ref.close(true);
+    })
+    .catch((err) => {
+      console.log(err);
+      this.toastr.error(err.message + err.success, 'Gerenciador de tarefas')
     });
   }
 }

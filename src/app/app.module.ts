@@ -6,6 +6,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { ToastrModule } from 'ngx-toastr';
 
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
@@ -25,6 +26,7 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserAnimationsModule,
     MaterialModule,
     CoreModule,
+    ToastrModule.forRoot(),
     SharedModule,
     ShellModule,
     HomeModule,
