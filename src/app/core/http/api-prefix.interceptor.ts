@@ -9,9 +9,9 @@ import { environment } from '@env/environment';
  */
 @Injectable()
 export class ApiPrefixInterceptor implements HttpInterceptor {
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     if (!/^(http|https):/i.test(request.url)) {
-      request = request.clone({ url: environment.serverUrl + request.url });
+      request = request.clone({ url: environment.serverUrl + "/api"+ request.url });
     }
     return next.handle(request);
   }
